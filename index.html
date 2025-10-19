@@ -5,45 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tặng em 20/10 ✿</title>
   <style>
+    /* Nền hồng nhạt, nội dung bắt đầu từ phía TRÊN */
     html, body {
       height: 100%;
       margin: 0;
-      background: #ffe3ed; /* hồng nhạt hơn nữa */
+      background: #ffe3ed; /* hồng nhạt */
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
-      color: #fff0f6;
-      overflow: hidden;
+      color: #ff4d8d; /* hồng đậm cho chữ */
+      overflow-x: hidden;
     }
 
+    /* Khối bố cục chính: bắt đầu từ trên, có khoảng trống nhẹ */
     .wrap {
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-      padding: 20px;
+      align-items: center;     /* căn giữa theo chiều ngang */
+      justify-content: flex-start; /* bắt đầu từ TRÊN */
+      padding: 20px 16px 60px;
+      gap: 14px;
       position: relative;
       z-index: 1;
     }
 
-    .bg-image {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: auto;
-      height: 100%; /* giữ tỉ lệ ảnh bình thường */
-      opacity: 0.5;
-      z-index: 0;
+    /* Canvas chứa ảnh + nội dung. Độ rộng nội dung = độ rộng ảnh */
+    .canvas {
+      display: inline-block;
+      max-width: 92vw;          /* phản hồi tốt trên mobile */
+    }
+
+    .hero {
+      display: block;
+      width: clamp(280px, 70vw, 760px); /* kiểm soát kích thước ảnh hợp lý */
+      height: auto;
+      margin: 0 auto 10px;   /* khoảng cách nhỏ với phần chữ */
+      /* Không chỉnh opacity để ảnh giữ màu BÌNH THƯỜNG */
     }
 
     .typewriter {
-      max-width: 800px;
+      width: 100%;           /* = độ rộng của container => = độ rộng ảnh */
+      box-sizing: border-box;
       font-size: 15px;
       line-height: 1.8;
-      color: #ffe1f0;
+      color: #ff4d8d;         /* chữ hồng đậm */
       white-space: pre-wrap;
-      text-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
+      text-shadow: 0 0 6px rgba(255, 77, 141, 0.15);
       border-left: 2px solid transparent;
       position: relative;
     }
@@ -55,20 +61,21 @@
       height: 1.1em;
       left: -2px;
       top: 0.3em;
-      background: linear-gradient(#ffe1f0, #ffe1f0);
+      background: currentColor; /* dùng đúng màu chữ hồng đậm */
       opacity: 0;
       animation: blink 0.9s steps(1, end) infinite;
     }
 
     @keyframes blink { 50% { opacity: 0; } 0%,100% { opacity: 1; } }
 
+    /* Hoa rơi thẳng xuống, xoay khi rơi, rồi mờ dần biến mất */
     .petal {
       position: fixed;
       top: -10vh;
       font-size: 18px;
       will-change: transform, opacity;
       pointer-events: none;
-      filter: drop-shadow(0 4px 6px rgba(255, 255, 255, 0.35));
+      filter: drop-shadow(0 4px 6px rgba(255, 128, 170, 0.35));
       opacity: 0.95;
       animation: fallSpin var(--dur, 10s) linear forwards, fadeout var(--dur, 10s) ease-out forwards;
       z-index: 2;
@@ -79,17 +86,16 @@
       to   { transform: translateY(120vh) rotate(var(--rot, 720deg)); }
     }
 
-    @keyframes fadeout {
-      0%, 85% { opacity: 0.95; }
-      100% { opacity: 0; }
-    }
+    @keyframes fadeout { 0%, 85% { opacity: 0.95; } 100% { opacity: 0; } }
   </style>
 </head>
 <body>
-  <img src="tanghoa.jpg" alt="Tặng hoa 20/10" class="bg-image" />
-
   <div class="wrap">
-    <div class="typewriter" id="typeTarget"></div>
+    <div class="canvas">
+      <!-- Ảnh giữ màu BÌNH THƯỜNG, không bị làm mờ/overlay -->
+      <img src="tanghoa.png" alt="Tặng hoa 20/10" class="hero" />
+      <div class="typewriter" id="typeTarget"></div>
+    </div>
   </div>
 
   <script>
@@ -129,10 +135,10 @@
     }
 
     window.addEventListener('load', async () => {
+      // Gõ xong mới cho hoa rơi liên tục
       await typeWriter(message, 26);
-      // chỉ bắt đầu hoa rơi sau khi gõ xong
       setInterval(() => {
-        dropPetals(5 + Math.floor(Math.random() * 6));
+        dropPetals(5 + Math.floor(Math.random() * 6)); // 5–10 bông/lượt
       }, 2500);
     });
   </script>
