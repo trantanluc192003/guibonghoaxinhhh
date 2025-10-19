@@ -5,28 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tặng em 20/10 ✿</title>
   <style>
+    /* Nền hồng NHẠT hơn + ảnh phủ toàn màn hình */
     html, body {
       height: 100%;
       margin: 0;
-      background: #ffb6c1; /* nền hồng */
+      background: #ffd6e7; /* hồng nhạt hơn */
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
       color: #fff0f6;
       overflow: hidden;
     }
+    body { position: relative; }
 
+    /* Ảnh nền hiển thị phía TRÊN màu nền, phía SAU nội dung */
     body::before {
       content: "";
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       background: url('tanghoa.jpg') center/cover no-repeat;
-      opacity: 0.45; /* mờ nhẹ để thấy chữ */
-      z-index: -1;
+      opacity: 0.55; /* mờ nhẹ để chữ rõ hơn */
+      z-index: 0;      /* nằm trên màu nền */
+      pointer-events: none;
     }
 
     .wrap {
+      position: relative;
+      z-index: 1;       /* nội dung nằm trên ảnh nền */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -38,11 +41,11 @@
 
     .typewriter {
       max-width: 800px;
-      font-size: 15px;
+      font-size: 15px;           /* chữ nhỏ màu hồng nhạt */
       line-height: 1.8;
-      color: #fff0f6;
+      color: #ffe1f0;
       white-space: pre-wrap;
-      text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
       border-left: 2px solid transparent;
       position: relative;
     }
@@ -54,29 +57,33 @@
       height: 1.1em;
       left: -2px;
       top: 0.3em;
-      background: linear-gradient(#fff0f6, #fff0f6);
+      background: linear-gradient(#ffe1f0, #ffe1f0);
       opacity: 0;
       animation: blink 0.9s steps(1, end) infinite;
     }
 
     @keyframes blink { 50% { opacity: 0; } 0%,100% { opacity: 1; } }
 
+    /* Hoa rơi: rơi THẲNG xuống, đang rơi có XOAY, rồi mờ dần và biến mất */
     .petal {
       position: fixed;
-      top: -10vh;
+      top: -12vh;                 /* điểm bắt đầu trên đỉnh màn hình */
       font-size: 18px;
       will-change: transform, opacity;
       pointer-events: none;
       filter: drop-shadow(0 4px 6px rgba(255, 255, 255, 0.35));
       opacity: 0.95;
-      animation-name: fall, sway, fadeout;
-      animation-timing-function: linear, ease-in-out, ease-out;
-      animation-fill-mode: forwards;
+      z-index: 1;                 /* trên ảnh nền */
+      /* thời gian, góc xoay truyền từ JS bằng biến CSS */
+      animation: fallSpin var(--dur, 10s) linear forwards,
+                 fadeout  var(--dur, 10s) ease-out forwards;
     }
 
-    @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-    @keyframes sway { 0% { margin-left: 0; } 50% { margin-left: 60px; } 100% { margin-left: 0; } }
-    @keyframes fadeout { 0%, 90% { opacity: 0.95; } 100% { opacity: 0; } }
+    @keyframes fallSpin {
+      from { transform: translateY(0) rotate(0deg); }
+      to   { transform: translateY(120vh) rotate(var(--rot, 720deg)); }
+    }
+    @keyframes fadeout { 0%, 85% { opacity: 0.95; } 100% { opacity: 0; } }
   </style>
 </head>
 <body>
@@ -102,27 +109,33 @@
       });
     }
 
-    function dropPetals(count = 8, baseDuration = 10) {
-      const emojis = ["🌸","💮","🌺","🌼"];
+    function dropPetals(count = 8, minDur = 9, maxDur = 13) {
+      const emojis = ["🌸","💮","🌺","🌼"]; // chọn ít để đồng đều
       for (let i = 0; i < count; i++) {
         const span = document.createElement('span');
         span.className = 'petal';
         span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        // vị trí bắt đầu ngẫu nhiên phía trên
         span.style.left = Math.random() * 100 + 'vw';
+        // kích thước ngẫu nhiên
         const size = 18 + Math.random() * 14;
         span.style.fontSize = size + 'px';
-        const dur = baseDuration + (Math.random() * 3 - 1.5);
-        span.style.animationDuration = `${dur}s, ${3 + Math.random() * 3}s, ${dur}s`;
-        span.style.animationDelay = `${Math.random() * 1}s, 0s, ${Math.random() * 0.5}s`;
+        // thời gian rơi ngẫu nhiên
+        const dur = (Math.random() * (maxDur - minDur)) + minDur; // 9–13s
+        span.style.setProperty('--dur', dur + 's');
+        // chiều xoay ngẫu nhiên (720° hoặc -720°)
+        const rot = Math.random() < 0.5 ? 720 : -720;
+        span.style.setProperty('--rot', rot + 'deg');
         document.body.appendChild(span);
-        setTimeout(() => span.remove(), (dur + 1) * 1000);
+        // dọn dẹp sau khi kết thúc
+        setTimeout(() => span.remove(), (dur + 0.5) * 1000);
       }
     }
 
-    // Liên tục tạo hiệu ứng hoa rơi
+    // Liên tục tạo hiệu ứng hoa rơi: mỗi 2.5s tạo 5–10 hoa
     setInterval(() => {
-      dropPetals(5 + Math.floor(Math.random() * 6)); // 5-10 hoa mỗi lần
-    }, 2000); // tạo mới mỗi 2s
+      dropPetals(5 + Math.floor(Math.random() * 6));
+    }, 2500);
 
     window.addEventListener('load', async () => {
       await typeWriter(message, 26);
