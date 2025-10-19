@@ -3,68 +3,50 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>guibonghoaxinhdep ✿</title>
+  <title>Tặng em 20/10 ✿</title>
   <style>
-    :root {
-      --bg: #0b0b10;
-      --text: #ff9ecf; /* hồng nhạt */
-      --text-soft: #ffb3da;
-    }
     html, body {
       height: 100%;
       margin: 0;
-      background: radial-gradient(1200px 800px at 70% -10%, #1a1b2b 0%, var(--bg) 60%);
-      color: var(--text);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      overflow-x: hidden;
-    }
-    .wrap {
-      min-height: 100%;
-      display: grid;
-      place-items: center;
-      padding: 24px 16px 56px;
+      background: #ffb6c1; /* nền hồng */
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+      color: #fff0f6;
+      overflow: hidden;
     }
 
-    .card {
-      width: min(820px, 92vw);
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('tanghoa.jpg') center/cover no-repeat;
+      opacity: 0.45; /* mờ nhẹ để thấy chữ */
+      z-index: -1;
+    }
+
+    .wrap {
       display: flex;
       flex-direction: column;
-      gap: 22px;
       align-items: center;
-      text-align: left;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 158, 207, 0.2);
-      border-radius: 24px;
-      padding: 22px;
-      box-shadow: 0 20px 60px rgba(255, 158, 207, 0.09), inset 0 0 40px rgba(255, 158, 207, 0.04);
-      backdrop-filter: blur(6px);
-    }
-    .hero {
-      width: min(520px, 88vw);
-      border-radius: 20px;
-      box-shadow: 0 12px 40px rgba(255, 158, 207, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
-      opacity: 0;
-      transform: scale(0.88);
-      animation: zoomIn 2.6s ease-out forwards;
-    }
-    @keyframes zoomIn {
-      0%   { opacity: 0; transform: scale(0.86); filter: brightness(0.8) saturate(0.9); }
-      30%  { opacity: 1; }
-      100% { opacity: 1; transform: scale(1); filter: brightness(1) saturate(1); }
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
     }
 
     .typewriter {
-      width: 100%;
-      font-size: 14.5px; /* phông chữ nhỏ */
+      max-width: 800px;
+      font-size: 15px;
       line-height: 1.8;
-      color: var(--text);
-      text-shadow: 0 0 10px rgba(255, 158, 207, 0.12);
-      white-space: pre-wrap; /* giữ xuống dòng */
-      letter-spacing: 0.1px;
-      border-left: 2px solid transparent; /* cursor đặt bằng ::after */
+      color: #fff0f6;
+      white-space: pre-wrap;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+      border-left: 2px solid transparent;
       position: relative;
-      padding: 2px 2px 2px 0;
     }
+
     .typewriter::after {
       content: "";
       position: absolute;
@@ -72,61 +54,37 @@
       height: 1.1em;
       left: -2px;
       top: 0.3em;
-      background: linear-gradient(var(--text), var(--text));
-      opacity: 0; /* ẩn tới khi bắt đầu gõ */
+      background: linear-gradient(#fff0f6, #fff0f6);
+      opacity: 0;
       animation: blink 0.9s steps(1, end) infinite;
     }
+
     @keyframes blink { 50% { opacity: 0; } 0%,100% { opacity: 1; } }
 
-    .signature { color: var(--text-soft); opacity: 0.9; }
-
-    /* Petals */
     .petal {
       position: fixed;
       top: -10vh;
       font-size: 18px;
       will-change: transform, opacity;
       pointer-events: none;
-      filter: drop-shadow(0 4px 6px rgba(255, 158, 207, 0.35));
+      filter: drop-shadow(0 4px 6px rgba(255, 255, 255, 0.35));
       opacity: 0.95;
       animation-name: fall, sway, fadeout;
       animation-timing-function: linear, ease-in-out, ease-out;
       animation-fill-mode: forwards;
     }
-    @keyframes fall {
-      to { transform: translateY(110vh) rotate(360deg); }
-    }
-    @keyframes sway {
-      0% { margin-left: 0; }
-      50% { margin-left: 60px; }
-      100% { margin-left: 0; }
-    }
-    @keyframes fadeout {
-      0%, 80% { opacity: 0.95; }
-      100% { opacity: 0; }
-    }
 
-    footer {
-      margin-top: 4px;
-      font-size: 12px;
-      color: #caa0b6;
-      opacity: 0.6;
-    }
+    @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+    @keyframes sway { 0% { margin-left: 0; } 50% { margin-left: 60px; } 100% { margin-left: 0; } }
+    @keyframes fadeout { 0%, 90% { opacity: 0.95; } 100% { opacity: 0; } }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="card">
-      <!-- Đặt tanghoa.png cùng thư mục với file index.html -->
-      <img src="tanghoa.jpg" alt="Tặng hoa 20/10" class="hero" id="hero" />
-
-      <div class="typewriter" id="typeTarget"></div>
-      <footer>✿ Chúc 20/10 thật rực rỡ ✿</footer>
-    </div>
+    <div class="typewriter" id="typeTarget"></div>
   </div>
 
   <script>
-    // === Nội dung thư (giữ nguyên xuống dòng) ===
     const message = `Chào em,\n\nHôm nay là 20/10 một ngày mà mọi bông hoa đều nở rộ, và cũng là ngày mà anh muốn gửi những lời này đến bông hoa xinh nhất với anh.\nHii, anh thật may mắn khi được gặp và trò chuyện với em giúp cho mỗi ngày trôi qua với anh có nhiều niềm vui và có ý nghĩa hơn.\nAnh chúc em 20/10 thật vui vẻ, hạnh phúc, luôn là bông hoa xinh tươi rực rỡ, chúc cho những điều may mắn và tốt đẹp nhất sẽ đến với em <3\nVà anh cũng mong một ngày nào đó sẽ có thể được đồng hành với em trong vai trò đặc biệt hơn để những lời chúc này có thể gửi đến em mỗi ngày chứ không phải đợi đến những dịp đặc biệt.\nGửi em- bông hoa xinh\nThân gửi,\nNgười thương em.`;
 
     const target = document.getElementById('typeTarget');
@@ -134,11 +92,6 @@
     function typeWriter(text, speed = 26) {
       return new Promise(resolve => {
         let i = 0;
-        // bật con trỏ
-        target.style.setProperty('--cursor-visible', 1);
-        target.style.setProperty('opacity', '1');
-        target.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        const cursor = () => target.classList.add('cursor');
         const timer = setInterval(() => {
           target.textContent = text.slice(0, i++);
           if (i > text.length) {
@@ -146,64 +99,33 @@
             resolve();
           }
         }, speed);
-        // hiện cursor khi bắt đầu
-        target.style.setProperty('--cursor', 1);
-        target.style.setProperty('--cursor-color', '#ff9ecf');
-        target.style.setProperty('--cursor-opacity', 1);
-        target.style.setProperty('--cursor-blink', 1);
-        target.style.setProperty('--cursor-width', '2px');
-        target.style.setProperty('--cursor-left', '-2px');
-        target.style.setProperty('--cursor-top', '0.3em');
-        target.style.setProperty('--cursor-height', '1.1em');
-        target.style.setProperty('--cursor-border', 'none');
-        target.style.setProperty('--cursor-bg', 'currentColor');
-        target.style.setProperty('--cursor-radius', '0');
-        target.style.setProperty('--cursor-boxshadow', 'none');
-        // làm con trỏ nhấp nháy (CSS đã có ::after)
-        target.style.setProperty('--cursor-visible', 1);
-        target.style.setProperty('--cursor-animation', 'blink 0.9s steps(1, end) infinite');
-        target.style.setProperty('--cursor-display', 'block');
-        target.style.setProperty('--cursor-opacity', 1);
-        target.style.setProperty('--cursor-left', '-2px');
-        target.style.setProperty('--cursor-top', '0.3em');
-        target.style.setProperty('--cursor-height', '1.1em');
-        target.style.setProperty('--cursor-bg', 'linear-gradient(#ff9ecf, #ff9ecf)');
-        target.style.setProperty('--cursor-width', '10px');
-        target.style.setProperty('--cursor-border', 'none');
-        target.style.setProperty('--cursor-radius', '0');
       });
     }
 
-    function dropPetals(count = 20, baseDuration = 6) {
-      const emojis = ["🌸","💮","🌺","🌷","🌼","🌹"]; // sẽ chọn ngẫu nhiên
+    function dropPetals(count = 8, baseDuration = 10) {
+      const emojis = ["🌸","💮","🌺","🌼"];
       for (let i = 0; i < count; i++) {
         const span = document.createElement('span');
         span.className = 'petal';
         span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        // vị trí & kích thước ngẫu nhiên
         span.style.left = Math.random() * 100 + 'vw';
-        const size = 16 + Math.random() * 18; // 16–34px
+        const size = 18 + Math.random() * 14;
         span.style.fontSize = size + 'px';
-        // thời gian rơi ~6s ± 1.5s
-        const dur = baseDuration + (Math.random() * 1.5 - 0.75);
-        span.style.animationDuration = `${dur}s, ${2 + Math.random() * 2.5}s, ${dur}s`;
-        span.style.animationDelay = `${Math.random() * 0.6}s, 0s, ${Math.random() * 0.4}s`;
+        const dur = baseDuration + (Math.random() * 3 - 1.5);
+        span.style.animationDuration = `${dur}s, ${3 + Math.random() * 3}s, ${dur}s`;
+        span.style.animationDelay = `${Math.random() * 1}s, 0s, ${Math.random() * 0.5}s`;
         document.body.appendChild(span);
-        // dọn dẹp sau khi kết thúc
-        setTimeout(() => span.remove(), (dur + 0.8) * 1000);
+        setTimeout(() => span.remove(), (dur + 1) * 1000);
       }
     }
 
-    // Trình tự: Đợi ảnh zoom gần xong -> gõ thư -> rơi hoa
+    // Liên tục tạo hiệu ứng hoa rơi
+    setInterval(() => {
+      dropPetals(5 + Math.floor(Math.random() * 6)); // 5-10 hoa mỗi lần
+    }, 2000); // tạo mới mỗi 2s
+
     window.addEventListener('load', async () => {
-      const hero = document.getElementById('hero');
-      // Chờ 400ms sau khi ảnh bắt đầu zoom để tạo nhịp
-      setTimeout(async () => {
-        // hiển thị con trỏ gõ (bật ::after)
-        document.querySelector('.typewriter')?.style.setProperty('--show-caret', 1);
-        await typeWriter(message, 26); // tốc độ gõ
-        dropPetals(20, 6); // ~20 cánh/lượt, rơi ~6s rồi mờ dần
-      }, 400);
+      await typeWriter(message, 26);
     });
   </script>
 </body>
